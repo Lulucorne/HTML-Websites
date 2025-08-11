@@ -202,11 +202,11 @@
   -webkit-appearance:none; appearance:none;
   position: absolute;
   right: 0;
-  bottom: 44px;                 /* pop above the mute button */
-  width: 140px;                 /* becomes vertical height after rotation */
+  bottom: calc(100% + 6px);      /* place slider just above mute button */
+  width: 140px;                  /* becomes vertical height after rotation */
   height: 8px;
-  transform: rotate(-90deg);
-  transform-origin: bottom right;
+  transform: rotate(90deg);      /* rotate so slider extends upward */
+  transform-origin: bottom right;/* keep bottom anchored to container */
   z-index: 20;
 
   background:linear-gradient(90deg, var(--moss), var(--sage));
@@ -340,12 +340,12 @@
       <aside class="card">
         <h3><span class="dot"></span> Faceclaim / Photos</h3>
         <div class="gallery">
-          <a href="https://imgur.com/I5DOYdl" target="_blank" rel="noopener"><img src="https://imgur.com/I5DOYdl.jpg" alt=""></a>
-          <a href="https://imgur.com/hGBacss" target="_blank" rel="noopener"><img src="https://imgur.com/hGBacss.jpg" alt=""></a>
-          <a href="https://imgur.com/LDQQJTG" target="_blank" rel="noopener"><img src="https://imgur.com/LDQQJTG.jpg" alt=""></a>
-          <a href="https://imgur.com/MbKNsNM" target="_blank" rel="noopener"><img src="https://imgur.com/MbKNsNM.jpg" alt=""></a>
-          <a href="https://imgur.com/86fJUnU" target="_blank" rel="noopener"><img src="https://imgur.com/86fJUnU.jpg" alt=""></a>
-          <a href="https://imgur.com/CtwKoPV" target="_blank" rel="noopener"><img src="https://imgur.com/CtwKoPV.jpg" alt=""></a>
+          <a href="https://imgur.com/I5DOYdl" target="_blank" rel="noopener"><img src="https://imgur.com/I5DOYdl.jpg" alt="Rowan in flannel leaning on fence"></a>
+          <a href="https://imgur.com/hGBacss" target="_blank" rel="noopener"><img src="https://imgur.com/hGBacss.jpg" alt="Rowan sitting on tailgate"></a>
+          <a href="https://imgur.com/LDQQJTG" target="_blank" rel="noopener"><img src="https://imgur.com/LDQQJTG.jpg" alt="Rowan with backpack in woods"></a>
+          <a href="https://imgur.com/MbKNsNM" target="_blank" rel="noopener"><img src="https://imgur.com/MbKNsNM.jpg" alt="Rowan fixing wooden door"></a>
+          <a href="https://imgur.com/86fJUnU" target="_blank" rel="noopener"><img src="https://imgur.com/86fJUnU.jpg" alt="Rowan looking over shoulder"></a>
+          <a href="https://imgur.com/CtwKoPV" target="_blank" rel="noopener"><img src="https://imgur.com/CtwKoPV.jpg" alt="Rowan holding coffee cup"></a>
         </div>
         <div style="margin-top:10px; font-size:12px;">
           More: <a href="#" onclick="return false;" target="_blank" rel="noopener">@Salvaged_Soul</a>
