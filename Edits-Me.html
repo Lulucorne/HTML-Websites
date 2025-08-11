@@ -7,9 +7,9 @@
 <style>
 /* ========= THEME ========= */
 :root {
-  --bg-linen: #f4efe6;
-  --ink: #2e2a24;
-  --ink-soft: #4a3f35;
+  --bg-linen: #f6f3ec;
+  --ink: #25211a;
+  --ink-soft: #4e4339;
   --moss: #6d8b74;
   --sage: #8aa087;
   --rust: #b56543;
@@ -30,15 +30,15 @@
 /* Linen paper background with a very light fiber effect */
 .rowan-profile .parchment {
   background:
-    radial-gradient(1200px 600px at 10% -10%, rgba(181,158,106,0.12), transparent 60%),
-    radial-gradient(900px 400px at 110% 10%, rgba(109,139,116,0.10), transparent 60%),
-    linear-gradient(180deg, #f8f5ed, var(--bg-linen));
-  border: 1px solid #e6e0d3;
+    radial-gradient(1200px 600px at 10% -10%, rgba(181,158,106,0.08), transparent 60%),
+    radial-gradient(900px 400px at 110% 10%, rgba(109,139,116,0.06), transparent 60%),
+    linear-gradient(180deg, #faf8f3, var(--bg-linen));
+  border: 1px solid #eae5d8;
   box-shadow:
     0 1px 0 #fff inset,
-    0 8px 24px rgba(0,0,0,0.08);
+    0 8px 24px rgba(0,0,0,0.06);
   border-radius: 14px;
-  padding: 22px;
+  padding: 24px;
   position: relative;
   overflow: hidden;
 }
@@ -47,8 +47,8 @@
 .rowan-profile .parchment::after{
   content:""; position:absolute; inset:0;
   background-image:
-    repeating-linear-gradient(0deg, rgba(0,0,0,0.02) 0 2px, transparent 2px 4px),
-    repeating-linear-gradient(90deg, rgba(0,0,0,0.015) 0 2px, transparent 2px 4px);
+    repeating-linear-gradient(0deg, rgba(0,0,0,0.01) 0 2px, transparent 2px 4px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.0075) 0 2px, transparent 2px 4px);
   pointer-events:none;
   mix-blend-mode:multiply;
 }
@@ -76,6 +76,11 @@
   margin-top: 6px; line-height: 1.4;
 }
 
+@media (max-width:500px){
+  .rowan-header{ grid-template-columns:70px 1fr; gap:12px; }
+  .rowan-avatar{ width:70px; height:70px; }
+}
+
 /* Botanical divider */
 .hr-leaf { --c: var(--moss); margin: 18px 0; height: 18px; position: relative; }
 .hr-leaf::before, .hr-leaf::after{
@@ -86,7 +91,7 @@
 .hr-leaf svg { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:28px; height:18px; opacity:.85; }
 
 /* Layout rows */
-.row { display:grid; gap:16px; margin: 18px 0; }
+.row { display:grid; gap:20px; margin: 20px 0; }
 @media (min-width:760px){
   .row.cols-2{ grid-template-columns: 1.1fr .9fr; }
   .row.swap{ grid-template-columns: .9fr 1.1fr; }
@@ -105,7 +110,7 @@
 .card h3 .dot{ width:8px; height:8px; border-radius:99px; background:var(--moss); box-shadow:0 0 0 2px #eaf0eb inset; }
 
 /* About */
-.about p{ margin:8px 0; line-height:1.6; }
+.about p{ margin:10px 0; line-height:1.65; }
 
 /* Traits */
 .traits{ display:flex; flex-wrap:wrap; gap:8px; }
@@ -144,15 +149,20 @@
 
 /* Subtle links */
 .rowan-profile a{ color:#355944; text-underline-offset:2px; }
-.rowan-profile a:hover{ color:#203d2f; }
+.rowan-profile a:hover{ color:#16271e; }
 
 /* Make it breathe on dark forum themes */
 .ipsApp .rowan-profile .parchment{ background: linear-gradient(180deg, #fcf9f2, var(--bg-linen)); }
 
 /* Tiny focus states */
 .rowan-profile a, .badge, .pill, .gallery a, .player{ outline:none; }
-.rowan-profile a:focus-visible, .gallery a:focus-visible{
-  box-shadow:0 0 0 3px rgba(109,139,116,.35); border-radius:10px;
+.rowan-profile a:focus-visible,
+.badge:focus-visible,
+.pill:focus-visible,
+.gallery a:focus-visible,
+.pl-btn:focus-visible{
+  outline:2px solid var(--moss);
+  outline-offset:2px;
 }
 
 /* ======= MUSIC PLAYER (themed) ======= */
@@ -168,6 +178,10 @@
   box-shadow:0 1px 0 #fff inset, 0 2px 6px rgba(0,0,0,0.05);
   transition: transform .06s ease, background .15s ease;
 }
+#rowan-player .pl-btn svg{ width:16px; height:16px; display:block; }
+#rowan-player .pl-btn .icon-pause{ display:none; }
+#rowan-player .pl-btn[aria-pressed="true"] .icon-play{ display:none; }
+#rowan-player .pl-btn[aria-pressed="true"] .icon-pause{ display:block; }
 #rowan-player .pl-btn:hover{ background:#faf8f2; }
 #rowan-player .pl-btn:active{ transform: translateY(1px); }
 
@@ -183,11 +197,16 @@
 #rowan-player .pl-bar{
   height:10px; border-radius:999px; background:#eae3d5; border:1px solid #d8cfbe;
   box-shadow: 0 1px 0 #fff inset;
-  position:relative; cursor:pointer;
+  position:relative; cursor:pointer; overflow:hidden;
 }
 #rowan-player .pl-fill{
   position:absolute; left:0; top:0; bottom:0; width:0%;
   background: linear-gradient(90deg, var(--moss), var(--sage));
+  border-radius:999px;
+}
+#rowan-player .pl-buffer{
+  position:absolute; left:0; top:0; bottom:0; width:0%;
+  background:#d2dccf;
   border-radius:999px;
 }
 
@@ -202,11 +221,11 @@
   -webkit-appearance:none; appearance:none;
   position: absolute;
   right: 0;
-  bottom: 44px;                 /* pop above the mute button */
-  width: 140px;                 /* becomes vertical height after rotation */
+  bottom: calc(100% + 6px);      /* place slider just above mute button */
+  width: 140px;                  /* becomes vertical height after rotation */
   height: 8px;
-  transform: rotate(-90deg);
-  transform-origin: bottom right;
+  transform: rotate(90deg);      /* rotate so slider extends upward */
+  transform-origin: bottom right;/* keep bottom anchored to container */
   z-index: 20;
 
   background:linear-gradient(90deg, var(--moss), var(--sage));
@@ -235,13 +254,22 @@
   pointer-events: auto;
   transition: opacity .15s ease, visibility 0s;
 }
+
+@media (prefers-reduced-motion: reduce){
+  .rowan-profile *,
+  .rowan-profile *::before,
+  .rowan-profile *::after{
+    transition: none !important;
+    animation: none !important;
+  }
+}
 </style>
 
 <div class="rowan-profile">
   <div class="parchment">
     <header class="rowan-header">
       <div class="rowan-avatar">
-        <img src="https://imgur.com/t5VPcmx.png" alt="Rowan Vale">
+        <img src="https://imgur.com/t5VPcmx.png" alt="Rowan Vale" loading="lazy" decoding="async" referrerpolicy="no-referrer">
       </div>
       <div class="rowan-title">
         <h1>Rowan Vale</h1>
@@ -280,14 +308,22 @@
 
           <!-- Themed Music Player -->
           <div class="player music" id="rowan-player">
-            <button class="pl-btn" data-action="prev" aria-label="Previous track">⟨</button>
-            <button class="pl-btn" data-action="toggle" aria-label="Play/Pause">►</button>
-            <button class="pl-btn" data-action="next" aria-label="Next track">⟩</button>
+            <button class="pl-btn" data-action="prev" aria-label="Previous track">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-9-6 9-6v12zM18 6v12" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            </button>
+            <button class="pl-btn" data-action="toggle" aria-label="Play/Pause" aria-pressed="false">
+              <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+              <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19V5h4v14H6zm8-14h4v14h-4V5z" fill="currentColor"/></svg>
+            </button>
+            <button class="pl-btn" data-action="next" aria-label="Next track">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l9 6-9 6V6zM6 18V6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            </button>
 
             <div class="pl-info">
               <div class="pl-title" id="pl-title" aria-live="polite">Iron &amp; Wine — Upward Over the Mountain</div>
               <div class="pl-time"><span id="pl-current">0:00</span> / <span id="pl-duration">0:00</span></div>
               <div class="pl-bar" id="pl-bar" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                <div class="pl-buffer" id="pl-buffer"></div>
                 <div class="pl-fill" id="pl-fill"></div>
               </div>
             </div>
@@ -340,12 +376,12 @@
       <aside class="card">
         <h3><span class="dot"></span> Faceclaim / Photos</h3>
         <div class="gallery">
-          <a href="https://imgur.com/I5DOYdl" target="_blank" rel="noopener"><img src="https://imgur.com/I5DOYdl.jpg" alt=""></a>
-          <a href="https://imgur.com/hGBacss" target="_blank" rel="noopener"><img src="https://imgur.com/hGBacss.jpg" alt=""></a>
-          <a href="https://imgur.com/LDQQJTG" target="_blank" rel="noopener"><img src="https://imgur.com/LDQQJTG.jpg" alt=""></a>
-          <a href="https://imgur.com/MbKNsNM" target="_blank" rel="noopener"><img src="https://imgur.com/MbKNsNM.jpg" alt=""></a>
-          <a href="https://imgur.com/86fJUnU" target="_blank" rel="noopener"><img src="https://imgur.com/86fJUnU.jpg" alt=""></a>
-          <a href="https://imgur.com/CtwKoPV" target="_blank" rel="noopener"><img src="https://imgur.com/CtwKoPV.jpg" alt=""></a>
+          <a href="https://imgur.com/I5DOYdl" target="_blank" rel="noopener"><img src="https://imgur.com/I5DOYdl.jpg" alt="Rowan in flannel leaning on fence" loading="lazy" decoding="async" referrerpolicy="no-referrer"></a>
+          <a href="https://imgur.com/hGBacss" target="_blank" rel="noopener"><img src="https://imgur.com/hGBacss.jpg" alt="Rowan sitting on tailgate" loading="lazy" decoding="async" referrerpolicy="no-referrer"></a>
+          <a href="https://imgur.com/LDQQJTG" target="_blank" rel="noopener"><img src="https://imgur.com/LDQQJTG.jpg" alt="Rowan with backpack in woods" loading="lazy" decoding="async" referrerpolicy="no-referrer"></a>
+          <a href="https://imgur.com/MbKNsNM" target="_blank" rel="noopener"><img src="https://imgur.com/MbKNsNM.jpg" alt="Rowan fixing wooden door" loading="lazy" decoding="async" referrerpolicy="no-referrer"></a>
+          <a href="https://imgur.com/86fJUnU" target="_blank" rel="noopener"><img src="https://imgur.com/86fJUnU.jpg" alt="Rowan looking over shoulder" loading="lazy" decoding="async" referrerpolicy="no-referrer"></a>
+          <a href="https://imgur.com/CtwKoPV" target="_blank" rel="noopener"><img src="https://imgur.com/CtwKoPV.jpg" alt="Rowan holding coffee cup" loading="lazy" decoding="async" referrerpolicy="no-referrer"></a>
         </div>
         <div style="margin-top:10px; font-size:12px;">
           More: <a href="#" onclick="return false;" target="_blank" rel="noopener">@Salvaged_Soul</a>
@@ -400,6 +436,7 @@
   const dur    = $('#pl-duration');
   const bar    = $('#pl-bar');
   const fill   = $('#pl-fill');
+  const buf    = $('#pl-buffer');
   const prevB  = document.querySelector('.pl-btn[data-action="prev"]');
   const nextB  = document.querySelector('.pl-btn[data-action="next"]');
   const togB   = document.querySelector('.pl-btn[data-action="toggle"]');
@@ -425,14 +462,20 @@
   }
   function play(){
     return audio.play()
-      .then(()=> { togB.textContent = "❚❚"; })
-      .catch(()=> { togB.textContent = "►"; });
+      .then(()=> { togB.setAttribute('aria-pressed', 'true'); })
+      .catch(()=> { togB.setAttribute('aria-pressed', 'false'); });
   }
-  function pause(){ audio.pause(); togB.textContent = "►"; }
+  function pause(){ audio.pause(); togB.setAttribute('aria-pressed', 'false'); }
 
+  function activateOnKey(btn, fn){
+    btn.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); fn(); }});
+  }
   prevB.addEventListener('click', ()=>{ audio.currentTime > 5 ? audio.currentTime = 0 : (load(i-1), play()); });
   nextB.addEventListener('click', ()=>{ load(i+1); play(); });
   togB.addEventListener('click', ()=>{ audio.paused ? play() : pause(); });
+  activateOnKey(prevB, ()=>{ audio.currentTime > 5 ? audio.currentTime = 0 : (load(i-1), play()); });
+  activateOnKey(nextB, ()=>{ load(i+1); play(); });
+  activateOnKey(togB, ()=>{ audio.paused ? play() : pause(); });
 
   audio.addEventListener('loadedmetadata', ()=>{
     dur.textContent = fmt(audio.duration);
@@ -445,6 +488,13 @@
     fill.style.width = p + "%";
     bar.setAttribute('aria-valuenow', Math.round(p));
   });
+  audio.addEventListener('progress', ()=>{
+    if(audio.buffered.length){
+      const end = audio.buffered.end(audio.buffered.length - 1);
+      const p = (end / (audio.duration || 1)) * 100;
+      buf.style.width = p + '%';
+    }
+  });
   audio.addEventListener('ended', ()=>{ load(i+1); play(); });
 
   // Scrub
@@ -454,6 +504,10 @@
     const ratio = Math.min(Math.max((clientX - rect.left)/rect.width, 0), 1);
     audio.currentTime = ratio * audio.duration;
   }
+  let scrubbing = false;
+  bar.addEventListener('pointerdown', e=>{ scrubbing = true; seekFrom(e.clientX); bar.setPointerCapture(e.pointerId); });
+  bar.addEventListener('pointermove', e=>{ if(scrubbing) seekFrom(e.clientX); });
+  bar.addEventListener('pointerup', e=>{ if(scrubbing){ seekFrom(e.clientX); scrubbing=false; bar.releasePointerCapture(e.pointerId); }});
   bar.addEventListener('click', e => seekFrom(e.clientX));
   bar.addEventListener('keydown', e=>{
     if(!audio.duration) return;
@@ -481,6 +535,14 @@
     if (audio.volume > 0) lastVol = audio.volume;
   });
   muteB.addEventListener('click', ()=>{
+    if (audio.volume > 0) {
+      lastVol = audio.volume || 0.2;
+      setVolumeFromRange(0);
+    } else {
+      setVolumeFromRange(Math.round((lastVol || 0.2) * 100));
+    }
+  });
+  activateOnKey(muteB, ()=>{
     if (audio.volume > 0) {
       lastVol = audio.volume || 0.2;
       setVolumeFromRange(0);
