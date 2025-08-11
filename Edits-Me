@@ -1,0 +1,508 @@
+<!-- Rowan Vale — Earthy Profile (drop-in HTML) -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Gloock&display=swap" rel="stylesheet">
+
+<style>
+/* ========= THEME ========= */
+:root {
+  --bg-linen: #f4efe6;
+  --ink: #2e2a24;
+  --ink-soft: #4a3f35;
+  --moss: #6d8b74;
+  --sage: #8aa087;
+  --rust: #b56543;
+  --wood: #8f7d68;
+  --gold: #b59e6a;
+  --card: #fffdf7;
+  --ring: rgba(45, 35, 26, 0.12);
+}
+
+/* Scope everything so it doesn't leak */
+.rowan-profile {
+  max-width: 880px; margin: 28px auto; padding: 0 12px;
+  color: var(--ink);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  position: relative;
+}
+
+/* Linen paper background with a very light fiber effect */
+.rowan-profile .parchment {
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(181,158,106,0.12), transparent 60%),
+    radial-gradient(900px 400px at 110% 10%, rgba(109,139,116,0.10), transparent 60%),
+    linear-gradient(180deg, #f8f5ed, var(--bg-linen));
+  border: 1px solid #e6e0d3;
+  box-shadow:
+    0 1px 0 #fff inset,
+    0 8px 24px rgba(0,0,0,0.08);
+  border-radius: 14px;
+  padding: 22px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ultra-subtle noise */
+.rowan-profile .parchment::after{
+  content:""; position:absolute; inset:0;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(0,0,0,0.02) 0 2px, transparent 2px 4px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.015) 0 2px, transparent 2px 4px);
+  pointer-events:none;
+  mix-blend-mode:multiply;
+}
+
+/* Header */
+.rowan-header{
+  display:grid; gap:18px;
+  grid-template-columns: 120px 1fr;
+  align-items:center;
+  position:relative;
+}
+.rowan-avatar{
+  width:120px; height:120px; border-radius:16px; overflow:hidden;
+  background:#ddd; border:1px solid #e6e0d3;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+.rowan-avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+.rowan-title h1{
+  font-family: "Gloock", "EB Garamond", serif;
+  font-weight: 400; letter-spacing: .4px;
+  font-size: 36px; margin: 0; color: var(--ink);
+}
+.rowan-title .tagline{
+  font-family: "EB Garamond", serif; font-size: 16px; color: var(--ink-soft);
+  margin-top: 6px; line-height: 1.4;
+}
+
+/* Botanical divider */
+.hr-leaf { --c: var(--moss); margin: 18px 0; height: 18px; position: relative; }
+.hr-leaf::before, .hr-leaf::after{
+  content:""; position:absolute; top:50%; width:42%; height:1px; background:linear-gradient(to right, transparent, var(--c));
+}
+.hr-leaf::after{ right:0; transform:translateY(-50%) scaleX(-1); }
+.hr-leaf::before{ left:0; transform:translateY(-50%); }
+.hr-leaf svg { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:28px; height:18px; opacity:.85; }
+
+/* Layout rows */
+.row { display:grid; gap:16px; margin: 18px 0; }
+@media (min-width:760px){
+  .row.cols-2{ grid-template-columns: 1.1fr .9fr; }
+  .row.swap{ grid-template-columns: .9fr 1.1fr; }
+}
+
+/* Cards */
+.card{
+  background: var(--card); border:1px solid #e8e2d6; border-radius: 12px;
+  padding:16px 16px 14px; position:relative;
+  box-shadow: 0 2px 0 #fff inset, 0 10px 20px var(--ring);
+}
+.card h3{
+  margin:0 0 10px; font-family:"EB Garamond", serif; font-weight:600; letter-spacing:.2px;
+  font-size:20px; color:var(--ink); display:flex; align-items:center; gap:8px;
+}
+.card h3 .dot{ width:8px; height:8px; border-radius:99px; background:var(--moss); box-shadow:0 0 0 2px #eaf0eb inset; }
+
+/* About */
+.about p{ margin:8px 0; line-height:1.6; }
+
+/* Traits */
+.traits{ display:flex; flex-wrap:wrap; gap:8px; }
+.badge{
+  font-size:12px; line-height:1; padding:8px 10px; border:1px solid #e1dbc9; border-radius:999px;
+  background:linear-gradient(180deg,#fffdf9,#f6f1e6); color:var(--ink-soft); box-shadow:0 1px 0 #fff inset;
+}
+.badge.good{ border-color:#d9e7de; background:linear-gradient(180deg,#fbfffc,#eef6f1); color:#335646; }
+.badge.warn{ border-color:#eedfd6; background:linear-gradient(180deg,#fffaf8,#f7eee9); color:#6a402b; }
+
+/* Mini section labels for Traits */
+.minihead{
+  width:100%; font-size:12px; letter-spacing:.08em; text-transform:uppercase;
+  color:#726556; margin:6px 0 2px; font-weight:600;
+}
+
+/* Gallery */
+.gallery{ display:grid; gap:8px; grid-template-columns:repeat(3,1fr); }
+.gallery a{ display:block; border-radius:10px; overflow:hidden; border:1px solid #e6e0d3; background:#ddd; }
+.gallery img{
+  width:100%; height:100%; aspect-ratio:1/1; object-fit:cover;
+  filter:saturate(.94) contrast(1.02); transition: transform .25s ease, filter .25s ease;
+}
+.gallery a:hover img{ transform:scale(1.03); filter:saturate(1.05) contrast(1.04); }
+
+/* Journal */
+.post{ border-top:1px dashed #d8d1c3; padding-top:12px; margin-top:12px; }
+.post:first-child{ border-top:0; padding-top:0; margin-top:0; }
+.post .meta{ font-size:12px; color:#726556; margin-bottom:6px; }
+.post h4{ font-family:"EB Garamond",serif; font-size:18px; margin:0 0 6px; }
+.post p{ margin:6px 0 0; line-height:1.65; }
+
+/* Small pills */
+.pills{ display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+.pill{ font-size:12px; padding:6px 8px; border-radius:8px; background:#eef3ef; color:#375647; border:1px solid #d8e7dc; }
+
+/* Subtle links */
+.rowan-profile a{ color:#355944; text-underline-offset:2px; }
+.rowan-profile a:hover{ color:#203d2f; }
+
+/* Make it breathe on dark forum themes */
+.ipsApp .rowan-profile .parchment{ background: linear-gradient(180deg, #fcf9f2, var(--bg-linen)); }
+
+/* Tiny focus states */
+.rowan-profile a, .badge, .pill, .gallery a, .player{ outline:none; }
+.rowan-profile a:focus-visible, .gallery a:focus-visible{
+  box-shadow:0 0 0 3px rgba(109,139,116,.35); border-radius:10px;
+}
+
+/* ======= MUSIC PLAYER (themed) ======= */
+#rowan-player{
+  display:flex; align-items:center; gap:12px; padding:12px;
+  border:1px solid #e6e0d3; border-radius:12px;
+  background: linear-gradient(180deg, #f7f4ec, #f2eee5);
+  box-shadow: 0 2px 0 #fff inset, 0 8px 18px rgba(45,35,26,0.08);
+}
+#rowan-player .pl-btn{
+  border:1px solid #d8cfbe; background:#fff; color:#4a3f35; cursor:pointer;
+  border-radius:10px; padding:8px 10px; font-size:14px; line-height:1;
+  box-shadow:0 1px 0 #fff inset, 0 2px 6px rgba(0,0,0,0.05);
+  transition: transform .06s ease, background .15s ease;
+}
+#rowan-player .pl-btn:hover{ background:#faf8f2; }
+#rowan-player .pl-btn:active{ transform: translateY(1px); }
+
+#rowan-player .pl-info{
+  flex:1; min-width:0; display:grid; gap:6px;
+}
+#rowan-player .pl-title{
+  font-size:14px; color:#2e2a24; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+#rowan-player .pl-time{
+  font-size:12px; color:#726556;
+}
+#rowan-player .pl-bar{
+  height:10px; border-radius:999px; background:#eae3d5; border:1px solid #d8cfbe;
+  box-shadow: 0 1px 0 #fff inset;
+  position:relative; cursor:pointer;
+}
+#rowan-player .pl-fill{
+  position:absolute; left:0; top:0; bottom:0; width:0%;
+  background: linear-gradient(90deg, var(--moss), var(--sage));
+  border-radius:999px;
+}
+
+/* Volume cluster */
+.rowan-profile .pl-vol{
+  display:flex; align-items:center; gap:8px; margin-left:8px;
+  position: relative; /* anchor for absolute slider */
+}
+
+/* Vertical overlay slider (hidden by default; no layout impact) */
+.rowan-profile #pl-volume{
+  -webkit-appearance:none; appearance:none;
+  position: absolute;
+  right: 0;
+  bottom: 44px;                 /* pop above the mute button */
+  width: 140px;                 /* becomes vertical height after rotation */
+  height: 8px;
+  transform: rotate(-90deg);
+  transform-origin: bottom right;
+  z-index: 20;
+
+  background:linear-gradient(90deg, var(--moss), var(--sage));
+  border:1px solid #d8cfbe; border-radius:6px;
+  box-shadow:0 1px 0 #fff inset;
+  outline:none; cursor:pointer;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .15s ease, visibility 0s linear .15s;
+}
+.rowan-profile #pl-volume::-webkit-slider-thumb{
+  -webkit-appearance:none; appearance:none; width:14px; height:14px; border-radius:50%;
+  background:#fff; border:1px solid #c9c0ae; box-shadow:0 1px 0 #fff inset;
+}
+.rowan-profile #pl-volume::-moz-range-thumb{
+  width:14px; height:14px; border-radius:50%; background:#fff; border:1px solid #c9c0ae; box-shadow:0 1px 0 #fff inset;
+}
+
+/* Reveal on hover/focus without layout shift */
+.rowan-profile .pl-vol:hover #pl-volume,
+.rowan-profile .pl-vol:focus-within #pl-volume{
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity .15s ease, visibility 0s;
+}
+</style>
+
+<div class="rowan-profile">
+  <div class="parchment">
+    <header class="rowan-header">
+      <div class="rowan-avatar">
+        <img src="https://imgur.com/t5VPcmx.png" alt="Rowan Vale">
+      </div>
+      <div class="rowan-title">
+        <h1>Rowan Vale</h1>
+        <div class="tagline">“On the road. Fixing what I can, leaving what I can’t. Cold coffee, good boots, dirt under my nails.”</div>
+      </div>
+    </header>
+
+    <div class="hr-leaf" aria-hidden="true">
+      <svg viewBox="0 0 64 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 18c10-8 22-8 32 0" stroke="#6d8b74" stroke-width="2" stroke-linecap="round"/>
+        <path d="M32 18c6 0 10-6 10-12-6 0-10 6-10 12Z" fill="#6d8b74" opacity=".9"/>
+      </svg>
+    </div>
+
+    <!-- Row 1: About & Quick Bits -->
+    <section class="row cols-2">
+      <article class="card about">
+        <h3><span class="dot"></span> About</h3>
+        <p>Yeah, I learned pretty quick not to get too set on anything. People leave, places change, and if you hang on too hard, you just… end up dragging it with you. Dead weight. Seen it happen.</p>
+        <p>First thing that was really mine was this beat-up old van. Probably would’ve sat in some yard forever if I hadn’t grabbed it. I tore out the bad bits, put in cedar shelves, bed in the wall so I could move around without cracking my knees. Strung up some lights. Didn’t need them, I guess, but it felt better with ‘em.</p>
+        <p>Summers I’d be at markets or fairs. Sell some stuff, fix some stuff. Winters I took whatever came along. Patching roofs, fixing up cabins, cutting old wood till it sat the way it ought to. I liked that work. You could stand back after and think, yeah, that’s mine.</p>
+        <p>I don’t really go after trouble. No reason to. But once it’s on you, it’s hard to shake. Best way to stay breathing? Keep your ears open, notice when the wind shifts, and hear the boots before they’re close enough to matter.</p>
+        <div class="pills" style="margin-top:10px">
+          <div class="pill">Resilient</div>
+          <div class="pill">Self-Reliant</div>
+          <div class="pill">Observant</div>
+          <div class="pill">Adaptable</div>
+        </div>
+      </article>
+
+      <aside class="card">
+        <h3><span class="dot"></span> Quick Bits</h3>
+        <div style="display:grid; gap:8px; font-size:14px;">
+          <div><strong style="color:#375647">Keeps:</strong> Polaroid camera, twine, dog-eared field guide, tin of mints</div>
+          <div><strong style="color:#375647">Avoids:</strong> Guns, hospitals, standing still</div>
+
+          <!-- Themed Music Player -->
+          <div class="player music" id="rowan-player">
+            <button class="pl-btn" data-action="prev" aria-label="Previous track">⟨</button>
+            <button class="pl-btn" data-action="toggle" aria-label="Play/Pause">►</button>
+            <button class="pl-btn" data-action="next" aria-label="Next track">⟩</button>
+
+            <div class="pl-info">
+              <div class="pl-title" id="pl-title" aria-live="polite">Iron &amp; Wine — Upward Over the Mountain</div>
+              <div class="pl-time"><span id="pl-current">0:00</span> / <span id="pl-duration">0:00</span></div>
+              <div class="pl-bar" id="pl-bar" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                <div class="pl-fill" id="pl-fill"></div>
+              </div>
+            </div>
+
+            <div class="pl-vol" title="Volume">
+              <button class="pl-btn vol-mute" id="pl-mute" aria-label="Mute/Unmute">🔈</button>
+              <input type="range" id="pl-volume" min="0" max="100" value="20" aria-label="Volume" aria-orientation="vertical" />
+            </div>
+
+            <audio id="pl-audio" preload="metadata"></audio>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Row 2: Traits & Gallery -->
+    <section class="row swap cols-2">
+      <article class="card">
+        <h3><span class="dot"></span> Traits</h3>
+        <div class="traits">
+          <div class="minihead">What sticks</div>
+          <span class="badge good">Make anywhere livable</span>
+          <span class="badge good">Keep the useful bits</span>
+          <span class="badge good">Mean what I say</span>
+          <span class="badge good">Read a room fast</span>
+          <span class="badge good">Listen first</span>
+
+          <div class="minihead">Edges and corners</div>
+          <span class="badge warn">Jump at bangs</span>
+          <span class="badge warn">Trust slow</span>
+          <span class="badge warn">Hospitals feel bad</span>
+          <span class="badge warn">Light sleeper</span>
+          <span class="badge warn">Don’t ask for help</span>
+
+          <div class="minihead">Everyday habits</div>
+          <span class="badge">Coffee goes cold</span>
+          <span class="badge">Count steps</span>
+          <span class="badge">Pocket junk</span>
+          <span class="badge">Check the wind</span>
+          <span class="badge">Clean as I go</span>
+
+          <div class="minihead">Under strain</div>
+          <span class="badge warn">Go still</span>
+          <span class="badge warn">Mark exits</span>
+          <span class="badge warn">Breathe quiet</span>
+          <span class="badge warn">Talk less</span>
+        </div>
+      </article>
+
+      <aside class="card">
+        <h3><span class="dot"></span> Faceclaim / Photos</h3>
+        <div class="gallery">
+          <a href="https://imgur.com/I5DOYdl" target="_blank" rel="noopener"><img src="https://imgur.com/I5DOYdl.jpg" alt=""></a>
+          <a href="https://imgur.com/hGBacss" target="_blank" rel="noopener"><img src="https://imgur.com/hGBacss.jpg" alt=""></a>
+          <a href="https://imgur.com/LDQQJTG" target="_blank" rel="noopener"><img src="https://imgur.com/LDQQJTG.jpg" alt=""></a>
+          <a href="https://imgur.com/MbKNsNM" target="_blank" rel="noopener"><img src="https://imgur.com/MbKNsNM.jpg" alt=""></a>
+          <a href="https://imgur.com/86fJUnU" target="_blank" rel="noopener"><img src="https://imgur.com/86fJUnU.jpg" alt=""></a>
+          <a href="https://imgur.com/CtwKoPV" target="_blank" rel="noopener"><img src="https://imgur.com/CtwKoPV.jpg" alt=""></a>
+        </div>
+        <div style="margin-top:10px; font-size:12px;">
+          More: <a href="#" onclick="return false;" target="_blank" rel="noopener">@Salvaged_Soul</a>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Row 3: Journal -->
+    <section class="card">
+      <h3><span class="dot"></span> Journal</h3>
+      <article class="post">
+        <div class="meta">August 7, 2007 — Louisville International Airport</div>
+        <h4>Dead sockets. Warm air. Everyone waiting.</h4>
+        <p>Lights blinked, then steadied. Somewhere far off, a siren didn’t know whether to commit. I counted steps between benches, picked out the families by their shoes. The coffee tasted like the inside of a penny. Kept the cup anyway; it fits the van holder just right.</p>
+      </article>
+      <article class="post">
+        <div class="meta">July 29, 2007 — County line</div>
+        <h4>New hinge hung true</h4>
+        <p>Took three shims and a breath I didn’t know I was holding. Cedar sawdust in my hair again. Feels like being home.</p>
+      </article>
+    </section>
+
+    <div class="hr-leaf" aria-hidden="true" style="margin-top:20px">
+      <svg viewBox="0 0 64 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 18c10-8 22-8 32 0" stroke="#b56543" stroke-width="2" stroke-linecap="round"/>
+        <path d="M32 18c-6 0-10 6-10 12 6 0 10-6 10-12Z" fill="#b56543" opacity=".9"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const tracks = [
+    { t: "Upward Over the Mountain", a: "Iron & Wine", u: "https://files.catbox.moe/2nn3df.mp3" },
+    { t: "Look At Miss Ohio", a: "Gillian Welch", u: "https://files.catbox.moe/wtleax.mp3" },
+    { t: "Heavenly Day", a: "Patty Griffin", u: "https://files.catbox.moe/js6gu0.mp3" },
+    { t: "The Littlest Birds", a: "The Be Good Tanyas", u: "https://files.catbox.moe/swmtzf.mp3" },
+    { t: "Wagon Wheel", a: "Old Crow Medicine Show", u: "https://files.catbox.moe/p3vwmy.mp3" },
+    { t: "Come Pick Me Up", a: "Ryan Adams", u: "https://files.catbox.moe/xhctj1.mp3" },
+    { t: "The Funeral", a: "Band of Horses", u: "https://files.catbox.moe/uxg7pp.mp3" },
+    { t: "Crystal Frontier", a: "Calexico", u: "https://files.catbox.moe/5w1kd6.mp3" },
+    { t: "New Slang", a: "The Shins", u: "https://files.catbox.moe/vl0dzb.mp3" },
+    { t: "Hold On, Hold On", a: "Neko Case", u: "https://files.catbox.moe/7sbnkv.mp3" },
+    { t: "The Greatest", a: "Cat Power", u: "https://files.catbox.moe/aqffac.mp3" }
+  ];
+
+  const $ = sel => document.querySelector(sel);
+  const audio  = $('#pl-audio');
+  const title  = $('#pl-title');
+  const cur    = $('#pl-current');
+  const dur    = $('#pl-duration');
+  const bar    = $('#pl-bar');
+  const fill   = $('#pl-fill');
+  const prevB  = document.querySelector('.pl-btn[data-action="prev"]');
+  const nextB  = document.querySelector('.pl-btn[data-action="next"]');
+  const togB   = document.querySelector('.pl-btn[data-action="toggle"]');
+
+  // Volume controls
+  const vol    = $('#pl-volume');
+  const muteB  = $('#pl-mute');
+  let lastVol = 0.2; // remember last non-muted volume
+
+  let i = 0;
+
+  function fmt(s){
+    if (isNaN(s)) return "0:00";
+    const m = Math.floor(s/60), sec = Math.floor(s%60);
+    return m + ":" + (sec<10 ? "0"+sec : sec);
+  }
+
+  function load(k){
+    i = (k + tracks.length) % tracks.length;
+    audio.src = tracks[i].u;
+    title.textContent = `${tracks[i].a} — ${tracks[i].t}`;
+    audio.load();
+  }
+  function play(){
+    return audio.play()
+      .then(()=> { togB.textContent = "❚❚"; })
+      .catch(()=> { togB.textContent = "►"; });
+  }
+  function pause(){ audio.pause(); togB.textContent = "►"; }
+
+  prevB.addEventListener('click', ()=>{ audio.currentTime > 5 ? audio.currentTime = 0 : (load(i-1), play()); });
+  nextB.addEventListener('click', ()=>{ load(i+1); play(); });
+  togB.addEventListener('click', ()=>{ audio.paused ? play() : pause(); });
+
+  audio.addEventListener('loadedmetadata', ()=>{
+    dur.textContent = fmt(audio.duration);
+    cur.textContent = "0:00";
+    fill.style.width = "0%";
+  });
+  audio.addEventListener('timeupdate', ()=>{
+    cur.textContent = fmt(audio.currentTime);
+    const p = (audio.currentTime / (audio.duration || 1)) * 100;
+    fill.style.width = p + "%";
+    bar.setAttribute('aria-valuenow', Math.round(p));
+  });
+  audio.addEventListener('ended', ()=>{ load(i+1); play(); });
+
+  // Scrub
+  function seekFrom(clientX){
+    if(!audio.duration) return;
+    const rect = bar.getBoundingClientRect();
+    const ratio = Math.min(Math.max((clientX - rect.left)/rect.width, 0), 1);
+    audio.currentTime = ratio * audio.duration;
+  }
+  bar.addEventListener('click', e => seekFrom(e.clientX));
+  bar.addEventListener('keydown', e=>{
+    if(!audio.duration) return;
+    if(e.key === 'ArrowRight') audio.currentTime = Math.min(audio.duration, audio.currentTime + 5);
+    if(e.key === 'ArrowLeft')  audio.currentTime = Math.max(0, audio.currentTime - 5);
+    if(e.key === 'Home') audio.currentTime = 0;
+    if(e.key === 'End')  audio.currentTime = audio.duration;
+  });
+
+  // Volume logic
+  function setVolumeFromRange(v){
+    const clamped = Math.min(Math.max(v, 0), 100);
+    audio.volume = clamped / 100;
+    vol.value = clamped;
+    if (audio.volume === 0) {
+      muteB.textContent = '🔇';
+    } else {
+      muteB.textContent = audio.volume < 0.35 ? '🔈' : (audio.volume < 0.75 ? '🔉' : '🔊');
+    }
+  }
+  setVolumeFromRange(20); // initial volume 20%
+
+  vol.addEventListener('input', e=>{
+    setVolumeFromRange(parseInt(e.target.value, 10));
+    if (audio.volume > 0) lastVol = audio.volume;
+  });
+  muteB.addEventListener('click', ()=>{
+    if (audio.volume > 0) {
+      lastVol = audio.volume || 0.2;
+      setVolumeFromRange(0);
+    } else {
+      setVolumeFromRange(Math.round((lastVol || 0.2) * 100));
+    }
+  });
+
+  // Init
+  load(0);
+
+  // ===== Autoplay (with polite unlock fallback) =====
+  (function tryAutoplay(){
+    play().then(()=>{
+      // started fine
+    }).catch(()=>{
+      // Most browsers block autoplay with sound — unlock on first interaction
+      const unlock = () => { play(); window.removeEventListener('click', unlock); window.removeEventListener('keydown', unlock); };
+      window.addEventListener('click', unlock, { once:true });
+      window.addEventListener('keydown', unlock, { once:true });
+    });
+  })();
+
+})();
+</script>
